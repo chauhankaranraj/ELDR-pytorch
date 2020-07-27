@@ -40,8 +40,8 @@ class IrisDataset(Dataset):
 
         if self.transform is not None:
             x_ret = self.transform(x_ret)
-        if self.target_transform is not None:
-            index
+        # if self.target_transform is not None:
+        #     index
 
         return x_ret, index_ret
 
