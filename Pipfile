@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+notebook = "*"
+ipykernel = "*"
+ipywidgets = "*"
+jupyter_contrib_nbextensions = "*"
+jupyter_nbextensions_configurator = "*"
+nbdime = "*"
+
+[packages]
+numpy = "*"
+scipy = "*"
+pandas = "*"
+joblib = "*"
+scikit-learn = "*"
+matplotlib = "*"
+seaborn = "*"
+plotly = "*"
+tqdm = "*"
+torch = "*"
+tensorflow-transform = "*"
+
+[requires]
+python_version = "3.6.3"
