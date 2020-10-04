@@ -22,6 +22,14 @@ class IrisDataset(Dataset):
         # any other transforms for data
         self.transform = transform
         self.target_transform = target_transform
+
+        # apply transform once, not every time item is fetched
+        # NOTE: this is feasible when we have a small dataset
+        # otherwise it's better to do it in getitem
+        if self.transform is not None:
+            self.X = self.transform(self.X)
+        if self.target_transform is not None:
+            self.y = self.target_transform(self.y)
         
     def __getitem__(self, index):
         """Returns item at index, as well as index itself
@@ -38,8 +46,8 @@ class IrisDataset(Dataset):
         # y_ret = torch.from_numpy(self.y[index]).type(torch.float)
         index_ret = torch.from_numpy(np.array(self.y[index]).reshape(1,)).type(torch.float)
 
-        if self.transform is not None:
-            x_ret = self.transform(x_ret)
+        # if self.transform is not None:
+        #     x_ret = self.transform(x_ret)
         # if self.target_transform is not None:
         #     index
 
