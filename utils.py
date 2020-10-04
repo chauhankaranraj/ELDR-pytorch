@@ -44,14 +44,14 @@ class IrisDataset(Dataset):
         # NOTE: must convert to float type otherwise pytorch internals complain
         x_ret = torch.from_numpy(self.X[index]).type(torch.float)
         # y_ret = torch.from_numpy(self.y[index]).type(torch.float)
-        index_ret = torch.from_numpy(np.array(self.y[index]).reshape(1,)).type(torch.float)
+        y_ret = torch.from_numpy(np.array(self.y[index]).reshape(1,)).type(torch.float)
 
         # if self.transform is not None:
         #     x_ret = self.transform(x_ret)
         # if self.target_transform is not None:
         #     index
 
-        return x_ret, index_ret
+        return x_ret, y_ret
 
     def __len__(self):
         return len(self.X)

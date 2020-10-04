@@ -64,7 +64,7 @@ class VAE(nn.Module):
             if li == 0:
                 h = F.elu(layer(z))
             elif li == len(self.decode_layers) - 1:
-                h = torch.sigmoid(layer(h))
+                h = torch.tanh(layer(h))
             else:
                 h = F.elu(layer(h))
         return h
@@ -78,7 +78,7 @@ class VAE(nn.Module):
 # Reconstruction + KL divergence losses summed over all elements and batch
 
 def loss_function(recon_x, x, mu, logvar):
-    BCE = F.binary_cross_entropy(recon_x, x, reduction='sum')
+    # BCE = F.binary_cross_entropy(recon_x, x, reduction='sum')
 
     # see Appendix B from VAE paper:
     # Kingma and Welling. Auto-Encoding Variational Bayes. ICLR, 2014
