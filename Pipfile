@@ -22,7 +22,8 @@ seaborn = "*"
 plotly = "*"
 tqdm = "*"
 torch = "*"
-tensorflow-transform = "*"
+tensorflow = "<2.0"
+scvis = {git = "https://github.com/shahcompbio/scvis.git", ref="af73849679e8f84d80e4418d0badf5ea9d9a87af"}
 
 [requires]
 python_version = "3.6.3"
