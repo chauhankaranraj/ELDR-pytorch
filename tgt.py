@@ -244,6 +244,10 @@ def transitive_global_translations(
     best_loss = np.inf
     best_deltas = None
     while not converged:
+        # stopping condition
+        if epoch - best_epoch > stopping_epochs and epoch > min_epochs:
+            break
+
         # update initial and target cluster indices every `consecutive_steps`
         if epoch % consecutive_steps == 0:
             initial_ci, target_ci = np.random.choice(num_clusters, 2, replace=False)
@@ -264,7 +268,7 @@ def transitive_global_translations(
         mu, logvar = model.encode(initial_pt + curr_delta)
         recon_pt = model.reparameterize(mu, logvar)
         loss_target = F.mse_loss(recon_pt, target_pt)
-        loss_global = torch.norm(curr_delta, p=1)
+        loss_global = l1_lambda * torch.norm(curr_delta, p=1)
         loss = loss_target + loss_global
         loss.backward()
 
@@ -289,9 +293,6 @@ def transitive_global_translations(
             deltas[initial_ci - 1].data += learning_rate * 0.5 * deltas[initial_ci - 1].grad.clamp(min=-1*clip_val, max=clip_val)
             deltas[target_ci - 1].data -= learning_rate * 0.5 * deltas[target_ci - 1].grad.clamp(min=-1*clip_val, max=clip_val)
 
-        # stopping condition
-        if epoch - best_epoch > stopping_epochs and epoch > min_epochs:
-            break
         
         if verbose:
             print('Epoch: {:3d} Loss: {:5f}'.format(epoch, ema), end="\r")
